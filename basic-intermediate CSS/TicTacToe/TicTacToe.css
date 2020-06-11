@@ -1,0 +1,47 @@
+h1{
+	text-align: center;
+}
+
+table.center{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table.center td{
+	width: 100px;
+	height: 100px;
+}
+
+table.center td.r1{
+	border-right: black 1px solid;
+	border-bottom: black 1px solid;
+	margin: 50px 50px 50px 50px;
+}
+
+table.center td#r1b{
+	/*inherit from table.center td.r1*/
+	border-bottom: none;
+}
+
+
+table.center td.r2{
+	border-right: black 1px solid;
+	border-bottom: black 1px solid;
+	margin: 50px 50px 50px 50px;
+}
+
+table.center td#r2b{
+	/*inherit from table.center td.r1*/
+	border-bottom: none;
+}
+
+
+table.center td.r3{
+	border-bottom: black 1px solid;
+	margin: 50px 50px 50px 50px;
+}
+
+table.center td#r3b{
+	/*inherit from table.center td.r1*/
+	border-bottom: none;
+}

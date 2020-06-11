@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Simple Form</title>
+</head>
+<body>
+	<h1>Sign In</h1>
+	<!-- A Form is a container where we put our inputs -->
+		<!-- action: where the form send data to  - default: refresh the page-->
+		<!-- method: what HTTP method (get/post) - default: "get"-->
+
+	<form action="http://wikipedia.org", method="get">
+		<!-- one syntax of labeling - nested structure -->
+		<label>Username: 
+			<input type="text" name="username" placeholder="username" required>
+		</label>
+
+		<label>Password:
+			<input type="password" name="password" placeholder="password" required>
+		</label>
+
+		<label>Email: 
+			<input type="email" name="email" placeholder="ex: XXXX@gmail.com" required>
+		</label>
+
+		<input type="submit" name="">
+		<button>Login</button>
+	</form>
+
+	<!-- another syntax of labeling: "for" + "id" -->
+	<form action="http://wikipedia.org" method="get">
+		<label for="username">Username: </label>
+		<input id="username" type="text" name="username" placeholder="username" required>
+
+		<label for="password">Password:</label>
+		<input id="password" type="password" name="password" placeholder="password" required>
+
+		<label for="email">Email: </label>
+		<input id="email" type="email" name="email" placeholder="ex: XXXX@gmail.com" required>
+
+		<input type="submit" name="">
+		<button>Login</button>
+	</form>
+
+
+	<p>Do you prefer dogs or cats?</p>
+	<form>
+		<!-- by giving these two radio button the same name "PetChoice" -->
+		<!-- we connect these two buttons to be one choice - you can only pick one -->
+		<label for="dogs">Dogs:</label>
+		<input id="dogs" type="radio" name="PetChoice" value="dogs">
+		<!-- "value": gives the information of posting this form -->
+
+		<label for="cats">Cats:</label>
+		<input id="cats" type="radio" name="PetChoice" value="cats">
+
+		<p>What's your current mood?</p>
+		<select name="mood">
+			<option value="happy">:)</option>
+			<option value="neutral">:|</option>
+			<option value="sad">:(</option>
+		</select>
+
+		<!-- textarea is a separate tag, not an attribute of "input" -->
+		<textarea name="paragraph" rows="10" cols="30"></textarea>
+
+		<button>Go!</button>
+		<!-- if a button is the last element in the form, it will submit the form -->
+	</form>
+
+</body>
+</html>

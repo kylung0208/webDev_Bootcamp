@@ -1,0 +1,33 @@
+h1 {
+	/*Hexidecimal*/
+	/*Use color picker online*/
+	color: #FF8000;
+	/*YOu need these three properties to get a border*/
+	/*border-color: purple;
+	border-width: 5px;
+	border-style: solid;*/
+
+	/*alter*/
+	border: purple 2px solid; /*solid/dashed...*/
+}
+
+li {
+	/*RGB*/
+	color: rgb(0, 80, 0);
+}
+
+h4 {
+	/*RGBA*/
+	/*same as RGB but with a fourth channel called transparency (alpha).*/
+	/*range from 0.0-1.0 */
+	color: rgba(11, 99, 150, 0.6);
+
+	background: rgb(255, 100, 80);
+}
+
+body {
+	/*background: rgba(11, 99, 150, 0.1);*/
+	background: url(https://scontent.ftpe8-3.fna.fbcdn.net/v/t1.0-9/32966563_2127711763922826_8591830351909748736_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=pilsdbcTiR0AX-Ayy9T&_nc_ht=scontent.ftpe8-3.fna&oh=0d9103d91ff457bff6f5ff4c4fd6254c&oe=5F0096D3);
+	background-repeat: no-repeat;
+	background-size: cover;
+}

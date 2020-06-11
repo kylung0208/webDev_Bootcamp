@@ -1,0 +1,19 @@
+body{
+	background: orange;
+}
+
+li{
+	/*element selector*/
+	border: 2px red solid;
+}
+#special{
+	/*id selector id=""*/
+	/*id should be unique in a html file*/
+	color: yellow;
+	background: brown;
+}
+
+.completed{
+	/*class selector*/
+	text-decoration: line-through;
+}
