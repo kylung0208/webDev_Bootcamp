@@ -1,7 +1,12 @@
-let express = require("express")
-let app = express()
-let bodyParser = require("body-parser")
-let mongoose = require("mongoose")
+const campground = require("./models/campground");
+
+let express     = require("express"),
+    app         = express(),
+    bodyParser  = require("body-parser"),
+    mongoose    = require("mongoose"),
+    Campgounrd  = require("./models/campground"),
+    Comment     = require("./models/comment"),
+    seedDB      = require("./seeds")
 
 //Connect Mongoose to MongoDB
 mongoose.set('useNewUrlParser', true);
@@ -15,53 +20,13 @@ mongoose.connect("mongodb://localhost:27017/yelp_camp")
 
 app.use(bodyParser.urlencoded({extended: true})) //use bodyParser
 app.set("view engine", "ejs")
+app.use(express.static(__dirname+ "/public"))
 
 
-//SCHEMA SETUP
-let campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String,
-})
-let Campgounrd = mongoose.model("Campground", campgroundSchema)
+//everytime restarts the server
+seedDB()
 
-//Callback function for debugging
-function campgroundDebugger(err, CG){
-    if(err){
-        console.log("Something went wrong!!")
-        console.error(err)
-    }
-    else{
-        console.log("We just saved a campground to the DB!")
-        console.log(CG)
-    }
-}
-
-// // create a campround and save to the DB
-// Campgounrd.create(
-//     {
-//         name: "Coffee on Wood", 
-//         image: "https://images.pexels.com/photos/1239422/pexels-photo-1239422.jpeg?auto=compress&cs=tinysrgb&h=350",
-//         description: "This is a cup of coffee on a nicely placed wood. It tastes good."
-//     }
-//     , campgroundDebugger)
-
-let campgrounds = [
-    {name: "Salmon Creek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image: "https://images.pexels.com/photos/1239422/pexels-photo-1239422.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Mountain Goat's Rest", image: "https://images.pexels.com/photos/712067/pexels-photo-712067.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Salmon Creek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image: "https://images.pexels.com/photos/1239422/pexels-photo-1239422.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Mountain Goat's Rest", image: "https://images.pexels.com/photos/712067/pexels-photo-712067.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Salmon Creek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image: "https://images.pexels.com/photos/1239422/pexels-photo-1239422.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Mountain Goat's Rest", image: "https://images.pexels.com/photos/712067/pexels-photo-712067.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Salmon Creek", image: "https://images.pexels.com/photos/1230302/pexels-photo-1230302.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Granite Hill", image: "https://images.pexels.com/photos/1239422/pexels-photo-1239422.jpeg?auto=compress&cs=tinysrgb&h=350"},
-    {name: "Mountain Goat's Rest", image: "https://images.pexels.com/photos/712067/pexels-photo-712067.jpeg?auto=compress&cs=tinysrgb&h=350"},
-]
-
-
+//HOME - Landing Page
 app.get("/", (req, res)=>{
     res.render("landing")
 })
@@ -75,7 +40,7 @@ app.get("/campgrounds", (req, res) => {
         }
         else{
             console.log("Retrieve All Campgrounds in the DB")
-            res.render("index", {campgrounds: allCampgrounds})
+            res.render("campgrounds/index", {campgrounds: allCampgrounds})
         }
     })
 })
@@ -105,18 +70,59 @@ app.post("/campgrounds", (req, res) => {
 
 // NEW - Show form to create new campground
 app.get("/campgrounds/new", (req, res) =>{
-    res.render("new")
+    res.render("campgrounds/new")
 })
 
 // SHOW - Shows info about one campground
 app.get("/campgrounds/:id", (req, res)=> { //should be added under "/camgrounds/new". Otherwise, the "new" keyword will be treated as an ":id"
     //find the campground with provided ID
-    Campgounrd.findById(req.params.id, (err, foundCampground)=>{
+    Campgounrd.findById(req.params.id).populate("comments").exec((err, foundCampground)=>{
         if(err){
             console.error(err)
         }else{
+            console.log(foundCampground)
             //render show template with that campground
-            res.render("show", {campground: foundCampground})
+            res.render("campgrounds/show", {campground: foundCampground})
+        }
+    })
+})
+
+
+
+//====================================================
+//COMMENTS ROUTE
+//====================================================
+
+app.get("/campgrounds/:id/comments/new", function(req, res){
+    // find campground by id
+    campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err)
+        } else{
+            res.render("comments/new", {campground: campground})
+        }
+    })
+})
+
+app.post("/campgrounds/:id/comments", function(req, res){
+    //lookup campground using ID
+    campground.findById(req.params.id, function(err, campground){
+        if(err){
+            console.log(err)
+            res.redirect("/campgrounds")
+        } else{
+            //create new comment
+            Comment.create(req.body.comment, function(err, comment){
+                if(err){
+                    console.log(err)
+                } else {
+                    //connect new comment to campground
+                    campground.comments.push(comment)
+                    campground.save()
+                    //redirect campground show page "/campground/id"
+                    res.redirect("/campgrounds/" + campground._id)
+                }
+            })
         }
     })
 })
