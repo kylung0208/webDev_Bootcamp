@@ -81,3 +81,32 @@ Each Campground has:
     - CREATE: campgrounds/:id/comments (POST)
 - Add the comment new and create routes
 - Add the new comment form
+
+## Style Show Page
+- Add side bar to show page
+- Display comments nicely
+
+## Finish Styling Show Page
+- Add public directory
+- Add custom stylesheet
+
+## Auth Pt. 1 - Add User Model
+- Install all packages for auth
+- Define user model
+
+## Auth Pt. 2 - Register
+- Configure passport
+- Add register routes
+- Add register template
+
+## Auth Pt. 3 - Login
+- Add login routes
+- Add login template
+
+## Auth Pt. 4 - Logout/Navbar
+- Add logout route
+- Prevent user from adding a comment if not signed in
+- Add links to navbar
+
+## Auth Pt. 5 - Show/Hide links
+- Show/hide auth links in navbar correctly
