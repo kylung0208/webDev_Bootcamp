@@ -2,11 +2,10 @@ let express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
+    flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    Campgounrd  = require("./models/campground"),
-    Comment     = require("./models/comment"),
     User        = require("./models/user"),
     seedDB      = require("./seeds")
 
@@ -29,6 +28,7 @@ app.use(bodyParser.urlencoded({extended: true})) //use bodyParser
 app.set("view engine", "ejs")
 app.use(express.static(__dirname+ "/public"))
 app.use(methodOverride("_method"))
+app.use(flash())
 
 
 //everytime restarts the server
@@ -48,6 +48,8 @@ passport.deserializeUser(User.deserializeUser())
 
 app.use(function(req, res, next){//limited to views/ directory
     res.locals.currentUser = req.user
+    res.locals.error = req.flash("error")
+    res.locals.success = req.flash("success")
     // middleware => need to add next() to exec the next code snippets.
     // Otherwise, the program will just stop.
     next()
