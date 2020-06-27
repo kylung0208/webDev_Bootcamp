@@ -121,3 +121,40 @@ Each Campground has:
 ## Users + Campgrounds
 - Prevent an unauthenticated user from creating a campground
 - Save username+id to newly created campground
+
+## Editing Campgrounds
+- Add Method-Override
+- Add Edit Route for Campgrounds
+- Add Link to Edit Page
+- Add Update Route
+- Fix $set problem
+
+## Deleting Campgrounds
+- Add Destroy Route
+- ADd Delete button
+
+## Authorization (Permissions)
+- User can only edit his/her campgrounds
+- User can only delete his/her campgrounds
+- Hide/Show edit and delete buttons
+
+## Editing Comments
+- Add Edit route for comments
+- Add Edit button
+- Add update route
+
+Campground Edit route: /campgrounds/:id/edit
+Comment Edit route: /campgrounds/:id/comments/:comment_id/edit
+
+## Deleting Comments
+- Add Destroy Route
+- Add delete button
+
+Campground Delete route: campgerounds/:id
+Comment Delete route: /campgrounds/:id/comment/:comment_id
+
+## Authorization Pt.2: Comments
+- User can only edit his/her comments
+- User can only delete his/her comments
+- Hide/Show edit and delete buttons
+- Refactor Middleware
