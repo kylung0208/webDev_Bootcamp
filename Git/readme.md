@@ -46,7 +46,7 @@ git commit
     - git remote add origin <URL_to_Github_repo>
     - origin: <remote_name>
 - Check your remotes
-    - git remote -
+    - git remote -v
 - Push your project to remote
     - git push -u <remote_name> <remote_branch_name_to_push>
     - ex: git push -u origin master
